@@ -33,8 +33,8 @@ export class PetService {
 
   addPet(pet: Pet): Observable<Pet> {
     const ownerId = pet.owner.id;
-    const ownersUrl = environment.REST_API_URL + `owners/${ownerId}/pets`;
-    return this.http.post<Pet>(ownersUrl, pet)
+    //const ownersUrl = environment.REST_API_URL + `${ownerId}`;
+    return this.http.post<Pet>(this.entityUrl + '/' + ownerId, pet)
       .pipe(
         catchError(this.handlerError('addPet', pet))
       );

@@ -11,14 +11,19 @@ import {Pet} from '../pet';
 export class PetListComponent implements OnInit {
   errorMessage: string = '';
   @Input() pet: Pet;
+  pets: Pet[] = [];
   responseStatus: number = 0;
   deleteSuccess = false;
+  isInsert: boolean;
 
   constructor(private router: Router, private petService: PetService) {
     this.pet = {} as Pet;
   }
 
   ngOnInit() {
+    this.petService.getPets().subscribe(
+      pets => this.pets = pets,
+      error => this.errorMessage = error as any);
   }
 
   editPet(pet: Pet) {
@@ -38,4 +43,11 @@ export class PetListComponent implements OnInit {
     this.router.navigate(['/pets', pet.id, 'visits', 'add']);
   }
 
+  addPet() {
+    this.router.navigate(['/pets/add']);
+  }
+
+  gotoHome() {
+    this.router.navigate(['/welcome']);
+  }
 }
